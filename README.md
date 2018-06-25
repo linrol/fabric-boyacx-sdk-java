@@ -26,3 +26,8 @@ peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com", "grpc://x.x.x.
 ``` 
 * 6.运行FabricManagerTest单元测试，包含了创建账户、账户转账、以及查询账户
 ![avatar](src/images/FabricManagerTest.png)
+
+## 待优化的问题
+ * 自定义搭建org
+ * 自定义chaincode
+ * 使用单独的CA节点来生成证书
