@@ -1,17 +1,5 @@
 package com.boyacx.fabric.test;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-
-import org.hyperledger.fabric.sdk.exception.CryptoException;
-import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
-import org.hyperledger.fabric.sdk.exception.ProposalException;
-import org.hyperledger.fabric.sdk.exception.TransactionException;
 import org.junit.Test;
 
 import com.boyacx.fabric.ChaincodeManager;
@@ -24,8 +12,12 @@ import com.boyacx.fabric.util.FabricManager;
 */
 public class FabricManagerTest{
 	
+	/**
+	 * 创建账户测试用例
+	 * @throws Exception
+	 */
 	@Test
-	public void testCreate() throws IOException, NoSuchAlgorithmException, InvocationTargetException, NoSuchMethodException, InstantiationException, InvalidKeySpecException, CryptoException, InvalidArgumentException, IllegalAccessException, NoSuchProviderException, TransactionException, ClassNotFoundException, InterruptedException, ExecutionException, TimeoutException, ProposalException {
+	public void testCreate() throws Exception {
         ChaincodeManager manager = FabricManager.obtain().getManager();
         String fcn = "create" ;
         String[] arguments = new String[]{"c","10"};
@@ -34,6 +26,10 @@ public class FabricManagerTest{
         manager.invoke(fcn, arguments);
     }
 	
+	/**
+	 * 账户之间转账测试用例
+	 * @throws Exception
+	 */
 	@Test
 	public void testMove() throws Exception {
 		ChaincodeManager manager = FabricManager.obtain().getManager();
@@ -42,8 +38,12 @@ public class FabricManagerTest{
         manager.invoke(fcn, arguments);
 	}
     
+	/**
+	 * 查询账户的测试用例
+	 * @throws Exception
+	 */
 	@Test
-	public void testQuery() throws IOException, NoSuchAlgorithmException, InvocationTargetException, NoSuchMethodException, InstantiationException, InvalidKeySpecException, CryptoException, InvalidArgumentException, IllegalAccessException, NoSuchProviderException, TransactionException, ClassNotFoundException, InterruptedException, ExecutionException, TimeoutException, ProposalException {
+	public void testQuery() throws Exception {
         ChaincodeManager manager = FabricManager.obtain().getManager();
         String fcn = "query" ;
         String[] arguments = new String[]{"c"};

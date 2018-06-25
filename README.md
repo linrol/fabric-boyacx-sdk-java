@@ -25,4 +25,4 @@ orderer.addOrderer("orderer0.example.com", "grpc://x.x.x.xx:7050");
 peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com", "grpc://x.x.x.xx:7051", "grpc://x.x.x.xx:7053", "http://x.x.x.xx
 ``` 
 * 6.运行FabricManagerTest单元测试，包含了创建账户、账户转账、以及查询账户
-
+![avatar](src/images/FabricManagerTest.png)
