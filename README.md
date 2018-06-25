@@ -26,3 +26,5 @@ peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com", "grpc://x.x.x.
 ``` 
 * 6.运行FabricManagerTest单元测试，包含了创建账户、账户转账、以及查询账户
 
+
+
