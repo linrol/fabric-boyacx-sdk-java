@@ -1,7 +1,7 @@
 # fabric-boyacx-sdk-java
 基于fabric-sdk-java release1.1.0封装搭建运用实例
 
-* 1.启动fabric-sdk-java的网络,执行src/test/sdkintegration/fabric.sh脚本文件，即可将网络启动。脚本命令包含了：./fabric.sh up 强制重新创建网络(默认会启动)、./fabric.sh start启动
+* 1.启动fabric-sdk-java的网络,执行src/test/fixture/sdkintegration/fabric.sh脚本文件，即可将网络启动。脚本命令包含了：./fabric.sh up 强制重新创建网络(默认会启动)、./fabric.sh start启动
 ./fabric.sh stop停止、./fabric.sh clean清理生成的docker容器
 
 * 2.替换本项目下的src/main/resource/fabric/chaincode/example_cc.go到fabric-sdk-java项目下的src/test/fixture/sdkintegration/sample1/src/github.com/example_cc/example_cc.go,在官方chaincode基础上自定义了创建账户的操作
