@@ -1,12 +1,13 @@
 # fabric-boyacx-sdk-java
 基于fabric-sdk-java release1.1.0封装搭建运用实例
 
-* 1.启动fabric-sdk-java的网络,执行src/test/sdkintegration/fabric.sh脚本文件，即可将网络启动。脚本命令包含了：./fabric.sh up 强制重新创建网络(默认会启动)、./fabric.sh start启动
+* 1.down fabric-sdk-java到服务器环境并启动网络,执行src/test/fixtrue/sdkintegration/fabric.sh脚本文件，即可将网络启动。脚本命令包含了：./fabric.sh up 强制重新创建网络(默认会启动)、./fabric.sh start启动
 ./fabric.sh stop停止、./fabric.sh clean清理生成的docker容器
 
 * 2.替换本项目下的src/main/resource/fabric/chaincode/example_cc.go到fabric-sdk-java项目下的src/test/fixture/sdkintegration/sample1/src/github.com/example_cc/example_cc.go,在官方chaincode基础上自定义了创建账户的操作
 
 * 3.down fabric-sdk-java源码并执行一次测试类下的End2EndIT测试方法，执行该测试方法时为了构建一个通道，并将org加入通道，然后安装链码，实例化链码，当然也可以通过已经搭建好的环境下的cli客户端工具进行初始化创世块、安装链码、实例化链码等操作
+* 3.1如果执行测试用例报错 200 400相关错误，则同步一下服务器时间（ntpdate us.pool.ntp.org）,时间相差一个小时以上就会出现此问题，还有个如果内存配置太小，在初始化智能合约代码时超过120秒钟就会连接超时，修改默认的连接超时时间即可
 
 * 4.替换src/main/resource/fabric/crypto-config文件夹为官方提供的 cryptogen 工具运行生成的组织关系和身份证书
 
@@ -31,3 +32,11 @@ peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com", "grpc://x.x.x.
  * 自定义搭建org
  * 自定义chaincode
  * 使用单独的CA节点来生成证书
+### 踩坑事迹
+ * 1.go环境变量必须配置GOROOT，否则执行生成证书文件会失败
+ * 2.Channel foo 测试用例完全成功,Channel bar 测试用例运行失败,stackoverflow说这里是版本不一致导致
+ * 3.如果Channel bar 用例跑失败，检查4个peer节点是否成功启动以及2个ca节点和一个orderer节点
+ * 4.Fabric不支持对同一个数据的并发事务处理，也就是说，如果我们同时运行了a->b 10元，b->a 10元，那么只会第一条Transaction成功，而第二条失败。因为在Committer节点进行读写集版本验证的时候，第二条Transaction会验证失败。这是我完全无法接受的一点！
+ * 5.Fabric是异步的系统，在Endorser的时候a->b 10元，b->a 10元都会返回给SDK成功，而第二条Transaction在Committer验证失败后不进行State Database的写入，但是并不会通知Client SDK，所以必须使用EventHub通知Client或者Client重新查询才能知道是否写入成功。
+ * 6.不管在提交节点对事务的读写数据版本验证是否通过，因为Block已经在Orderer节点生成了，所以Block是被整块写入区块链的，而在State Database不会写入，所以会在Transaction之外的地方标识该Transaction是无效的。
+ * 7.query没有独立的函数出来，并不是根据只有读集没有写集而判断是query还是Transaction。
