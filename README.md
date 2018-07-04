@@ -28,6 +28,15 @@ peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com", "grpc://x.x.x.
 * 6.运行FabricManagerTest单元测试，包含了创建账户、账户转账、以及查询账户
 ![avatar](src/images/FabricManagerTest.png)
 
+## 自定义org和example.com
+  * 1.修改chaincodeendorsementpolicy.yaml 、docker-compose.yaml、peer-base/peer-base.yaml相关的配置
+  * 2.修改crypto-config.yaml配置并执行命令cryptogen generate --config=./crypto-config.yaml生成相应的秘钥和证书文件夹crypto-config
+  * 3.替换fabric-sdk-java/src/test/fixture/sdkintegration/e2e-2Orgs/v1.1下官方生成的crypto-config目录
+  * 4.修改configtx.yaml对应配置并执行命令configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/orderer.block生成排序节点创世区块orderer.block
+  * 5.替换fabric-sdk-java/src/test/fixture/sdkintegration/e2e-2Orgs/v1.1下官方的排序创世区块orderer.block
+  * 6.执行命令configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/foo.tx -channelID foo创建频道配置交易foo.tx，同上进行替换
+  * 7.修改fabric-sdk-java源码下的org1、org2、example.com相关的所有类，在执行End2endIT测试类，安装链码实例化链码，测试通过即自定义成功
+
 ## 待优化的问题
  * 自定义搭建org
  * 自定义chaincode
