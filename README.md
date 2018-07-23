@@ -36,6 +36,14 @@ peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com", "grpc://x.x.x.
   * 5.替换fabric-sdk-java/src/test/fixture/sdkintegration/e2e-2Orgs/v1.1下官方的排序创世区块orderer.block
   * 6.执行命令configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/foo.tx -channelID foo创建频道配置交易foo.tx，同上进行替换
   * 7.修改fabric-sdk-java源码下的org1、org2、example.com相关的所有类，在执行End2endIT测试类，安装链码实例化链码，测试通过即自定义成功
+  * 7.1替换服务器中新生成的crypto-config文件夹到项目中,替换TestConfig.java类中的配置、修改End2endIT.java中203行和215行peer节点的名称
+  
+## peer使用CouchDb替换默认的leveldb作为状态数据库
+  * 1.修改docker-compose.yaml启动文件，添加对应peer节点数量的CouchDb
+  ![avatar](src/images/CouchDb.png)
+  * 2.修改docker-compose.yaml启动文件，在对应peer节点下增加如下配置
+  ![avatar](src/images/PeerCouchDb.png)
+  
 
 ## 待优化的问题
  * 自定义搭建org
