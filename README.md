@@ -44,6 +44,19 @@ peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com", "grpc://x.x.x.
   * 2.修改docker-compose.yaml启动文件，在对应peer节点下增加如下配置
   ![avatar](src/images/PeerCouchDb.png)
   
+## 搭建F.N.S区块链平台
+  * 1.搭建fabric网络，搭建教程见以上
+  * 2.创建频道配置交易xxx.tx,并将所有的peer节点加入通道
+  * 2.1通过docker进入到cli容器中执行命令peer channel create -o orderer.boyacx.com:7050 -c collection -f ./channel-artifacts/collection.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/boyacx.com/orderers/orderer.boyacx.com/msp/tlscacerts/tlsca.boyacx.com-cert.pem
+  * 2.2修改环境变量到其他peer节点上，然后加入通道
+  ``` java
+    root@2f3af7e64868:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer channel join -b mychannel.block
+root@2f3af7e64868:/opt/gopath/src/github.com/hyperledger/fabric/peer# CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp CORE_PEER_ADDRESS=peer1.org1.example.com:7051 CORE_PEER_LOCALMSPID="Org1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt peer channel join -b mychannel.block
+root@2f3af7e64868:/opt/gopath/src/github.com/hyperledger/fabric/peer# CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID="Org2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel join -b mychannel.block
+root@2f3af7e64868:/opt/gopath/src/github.com/hyperledger/fabric/peer# CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer1.org2.example.com:7051 CORE_PEER_LOCALMSPID="Org2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel join -b mychannel.block
+  ``` 
+  * 3.到F.N.S平台创建对应的组件并验证测试
+  
 
 ## 待优化的问题
  * 自定义搭建org
