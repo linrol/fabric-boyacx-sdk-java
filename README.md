@@ -70,3 +70,14 @@ root@2f3af7e64868:/opt/gopath/src/github.com/hyperledger/fabric/peer# CORE_PEER_
  * 5.Fabric是异步的系统，在Endorser的时候a->b 10元，b->a 10元都会返回给SDK成功，而第二条Transaction在Committer验证失败后不进行State Database的写入，但是并不会通知Client SDK，所以必须使用EventHub通知Client或者Client重新查询才能知道是否写入成功。
  * 6.不管在提交节点对事务的读写数据版本验证是否通过，因为Block已经在Orderer节点生成了，所以Block是被整块写入区块链的，而在State Database不会写入，所以会在Transaction之外的地方标识该Transaction是无效的。
  * 7.query没有独立的函数出来，并不是根据只有读集没有写集而判断是query还是Transaction。
+ 
+ * 8.数据库集群配置、主从配置、读写分离
+ * 9.数据库参数动态传入，yaml参数动态传入，自动打包到服务器等
+ * 10.Apollo权限分配问题、线上敏感信息权限(pro)问题，自己公司接入SSO
+ * 11.分布式一致性协议算法学习
+ * 12.fabric服务器上的配置性能优化:基于zookeeper+kafka做集群order共识节点配置、chaincode智能合约代码无感知自动升级、fabric DB持久化数据、区块链网络目录修改为生产环境
+ * 13.apollo数据库读写分离问题、主从同步问题研究以及集群部署下session保证一致问题
+ * 14.fabric-sdk-java项目安装指定的chaincode代码并实现无缝升级。fabric安装智能合约的代码提出来放到ntfbs项目上
+ * 15.ntfbs项目读取crypto-config目录下的证书在jar包读取不到，需使用二进制流形式读取，fabric网络挂掉以后ntfbs项目需重启问题
+ * 16.ntfbs项目需在docker进行war包使用生产级别的tomcat进行发布上线
+ 
