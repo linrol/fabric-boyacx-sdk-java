@@ -81,5 +81,5 @@ root@2f3af7e64868:/opt/gopath/src/github.com/hyperledger/fabric/peer# CORE_PEER_
  * 15.ntfbs项目读取crypto-config目录下的证书在jar包读取不到，需使用二进制流形式读取，fabric网络挂掉以后ntfbs项目需重启问题
  * 16.ntfbs项目需在docker进行war包使用生产级别的tomcat进行发布上线
   ## 后续补充
-  [Hyperledger Fabric1.3安装部署以及动态Org、Peer的实现](http://www.cnblogs.com/sxdcgaq8080/p/7894828.html)
+  [Hyperledger Fabric1.3安装部署以及动态Org、Peer的实现](https://studygolang.com/articles/16367)
  
